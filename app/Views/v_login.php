@@ -4,15 +4,10 @@
 	<div class="login-header box-shadow">
 		<div class="container-fluid d-flex justify-content-between align-items-center">
 			<div class="brand-logo">
-				<a href="login.html">
+				<a href="<?= base_url() ?>">
 					<img src="<?= base_url() ?>/public/images/deskapp-logo.svg" alt="">
 				</a>
 			</div>
-			<!-- <div class="login-menu">
-				<ul>
-					<li><a href="register.html">Register</a></li>
-				</ul>
-			</div> -->
 		</div>
 	</div>
 	<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
@@ -26,32 +21,18 @@
 						<div class="login-title">
 							<h2 class="text-center text-primary">Login To Admin Panel</h2>
 						</div>
-						<form>
-						 	<!-- <div class="select-role">
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn active">
-										<input type="radio" name="options" id="admin">
-										<div class="icon"><img src="<?= base_url() ?>/public/images/briefcase.svg" class="svg" alt=""></div>
-										<span>I'm</span>
-										Manager
-									</label>
-									<label class="btn">
-										<input type="radio" name="options" id="user">
-										<div class="icon"><img src="<?= base_url() ?>/public/images/person.svg" class="svg" alt=""></div>
-										<span>I'm</span>
-										Employee
-									</label>
-								</div>
-							</div> -->
+						<!-- <form> -->
+						<?= form_open('login/auth', ['class' => 'formLogin']); ?>
+                		<?= csrf_field(); ?>
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" placeholder="Username">
-								<div class="input-group-append custom">
+								<input type="email" class="form-control form-control-lg" placeholder="Email address" name="inputuser" id="inputuser">
+								<div class="input-group-append custom handlermail">
 									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
 								</div>
 							</div>
 							<div class="input-group custom">
-								<input type="password" class="form-control form-control-lg" placeholder="**********">
-								<div class="input-group-append custom">
+								<input type="password" class="form-control form-control-lg" placeholder="**********" name="password" id="password">
+								<div class="input-group-append custom handlerpass">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 								</div>
 							</div>
@@ -62,26 +43,24 @@
 										<label class="custom-control-label" for="customCheck1">Remember</label>
 									</div>
 								</div>
-								<!-- <div class="col-6">
-									<div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div>
-								</div> -->
+								<div class="col-6">
+									<!-- <div class="forgot-password"><a href="<?= base_url() . '/resetmypassword'; ?>">Forgot Password</a></div> -->
+									<div class="forgot-password"><a href="#">Forgot Password</a></div>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="input-group mb-0">
 										<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-										<a class="btn btn-primary btn-lg btn-block" href="#>Sign In</a>
+											use code for form submit -->
+										<input class="btn btn-primary btn-lg btn-block btn-login" type="submit" value="Sign In">
+										
+										<!-- <a class="btn btn-primary btn-lg btn-block" href="index.html">Sign In</a> -->
 									</div>
-									<!-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
-									<div class="input-group mb-0">
-										<a class="btn btn-outline-primary btn-lg btn-block" href="register.html">Register To Create Account</a>
-									</div> -->
 								</div>
 							</div>
-						</form>
+						<!-- </form> -->
+						<?= form_close(); ?>
 					</div>
 				</div>
 			</div>

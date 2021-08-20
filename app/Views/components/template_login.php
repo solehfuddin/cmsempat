@@ -19,16 +19,6 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/icon-font.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/style.css">
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-119386393-1');
-	</script> -->
 </head>
 <body class="login-page">
 	<!-- Page content -->
@@ -39,5 +29,10 @@
 	<script src="<?= base_url() ?>/public/scripts/script.min.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/process.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/layout-settings.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="<?= base_url() ?>/public/scripts/myapp.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 </body>
 </html>
