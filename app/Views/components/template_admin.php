@@ -39,6 +39,7 @@
     <?= $this->renderSection('content'); ?>
 
 	<!-- js -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<script src="<?= base_url() ?>/public/scripts/core.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/script.min.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/process.js"></script>
@@ -49,5 +50,19 @@
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/dashboard.js"></script>
+	<!-- buttons for Export datatable -->
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.print.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.html5.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.flash.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/pdfmake.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/vfs_fonts.js"></script>
+	<!-- Datatable Setting js -->
+	<!-- <script src="<?= base_url() ?>/public/scripts/datatable-setting.js"></script></body> -->
+    <script src="<?= base_url() ?>/public/scripts/myapp.js"></script>
+	<script>
+   	 var BASE_URL = "<?= base_url(); ?>";
+  	</script>
 </body>
 </html>

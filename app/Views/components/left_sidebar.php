@@ -11,17 +11,36 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+                <li>
+                    <a href="<?= base_url() . '/dashboard'; ?>" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-board"></span><span class="mtext">Dashboard</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a href="index.html">Dashboard style 1</a></li>
-                        <li><a href="index2.html">Dashboard style 2</a></li>
-                        <li><a href="index3.html">Dashboard style 3</a></li>
-                    </ul>
                 </li>
                 <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-edit1"></span><span class="mtext">Data Entri</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="<?= base_url() . '/customentry'; ?>">Custom</a></li>
+                        <li><a href="<?= base_url() . '/feedbackcustomer'; ?>">Testimoni</a></li>
+                        <li><a href="<?= base_url() . '/listarticle'; ?>">Artikel</a></li>
+                        <li><a href="<?= base_url() . '/typearticle'; ?>">Jenis Artikel</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?= base_url() . '/questionuser'; ?>" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-question-1"></span><span class="mtext">Faq user</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon dw dw-settings2"></span><span class="mtext">Pengaturan</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="<?= base_url() . '/settingadmin'; ?>">User</a></li>
+                    </ul>
+                </li>
+                <!-- <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
                     </a>
@@ -193,7 +212,7 @@
                         <span class="micon dw dw-paper-plane1"></span>
                         <span class="mtext">Landing Page <img src="<?= base_url() ?>/public/images/coming-soon.png" alt="" width="25"></span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

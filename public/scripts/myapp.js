@@ -78,3 +78,195 @@ $(document).ready(function() {
         return false;
     })
 });
+
+//Datatables article type
+$(document).ready( function () {
+    var url = '/article/ajax_list';
+    var table = $('#datatable-article').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
+
+//Datatables article type
+$(document).ready( function () {
+    var url = '/custom/ajax_list';
+    var table = $('#datatable-custom').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
+
+//Datatables article type
+$(document).ready( function () {
+    var url = '/testimoni/ajax_list';
+    var table = $('#datatable-testi').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
+
+//Datatables article type
+$(document).ready( function () {
+    var url = '/articletype/ajax_list';
+    var table = $('#datatable-articletype').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
+
+//Datatables faq
+$(document).ready( function () {
+    var url = '/faq/ajax_list';
+    var table = $('#datatable-faq').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
+
+//Datatables account
+$(document).ready( function () {
+    var url = '/account/ajax_list';
+    var table = $('#datatable-uaccount').DataTable({
+		scrollCollapse: true,
+		autoWidth: false,
+		responsive: true,
+        "serverSide": true,
+		columnDefs: [{
+			targets: "datatable-nosort",
+			orderable: false,
+		}],
+        "ajax": {
+            "url": BASE_URL + url,
+            "type": "POST"
+        },
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"language": {
+			"info": "_START_-_END_ of _TOTAL_ entries",
+			searchPlaceholder: "Search",
+			paginate: {
+				next: '<i class="ion-chevron-right"></i>',
+				previous: '<i class="ion-chevron-left"></i>'  
+			}
+		},
+		dom: 'Bfrtp',
+		buttons: [
+		'copy', 'csv', 'pdf', 'print'
+		]
+	});
+});
