@@ -116,7 +116,7 @@
                     <span class="user-name"><?= $session->get('username'); ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="#"><i class="dw dw-user1"></i> Profile</a>
+                    <a class="dropdown-item" href="<?= base_url() . '/viewprofile'; ?>"><i class="dw dw-user1"></i> Profile</a>
                     <a class="dropdown-item" href="<?= base_url() . '/logout'; ?>"><i class="dw dw-logout"></i> Log Out</a>
                 </div>
             </div>

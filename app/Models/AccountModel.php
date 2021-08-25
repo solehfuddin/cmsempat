@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 class AccountModel extends Model {
     protected $table = 'tbl_user';
     protected $primaryKey = 'kode_user';
-    protected $allowedFields = ['kode_user','nama_user', 'email', 'user_level', 'insert_date'];
+    protected $allowedFields = ['kode_user','nama_user', 'email', 'password', 'user_level'];
     protected $column_order = array('kode_user', 'nama_user', 'email', 'user_level', 'insert_date', '');
     protected $column_search = array('kode_user', 'nama_user', 'email', 'user_level', 'insert_date');
     protected $order = array('kode_user' => 'asc');

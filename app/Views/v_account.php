@@ -8,6 +8,12 @@
 				<div class="card-box mb-30">
 					<div class="pd-20">
 						<h4 class="text-blue h4">Data Account</h4>
+						<div class="text-right">
+							<button type="button" class="btn btn-primary btn-sm mt-3" 
+									  data-toggle="modal" data-target="#modaltambahuaccount" onClick="generatekodeuaccount()">
+							   <i class="fa fa-plus-circle"></i> Tambah Data
+							</button>
+						</div>
 					</div>
 					<div class="pb-20">
                         <div class="table-responsive">
@@ -36,4 +42,7 @@
 			</div>
 		</div>
 	</div>
+	
+	<?= $this->include('add_account'); ?>
+	<?= $this->include('edit_account'); ?>
 <?= $this->endSection(); ?>

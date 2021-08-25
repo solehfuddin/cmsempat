@@ -35,6 +35,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Login::index');
 $routes->get('logout', 'Login::out');
 $routes->get('dashboard', 'Dashboard::index');
+$routes->get('viewprofile', 'Profile::index');
 $routes->get('listarticle', 'Article::index');
 $routes->get('customentry', 'Custom::index');
 $routes->get('feedbackcustomer', 'Testimoni::index');

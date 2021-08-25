@@ -18,6 +18,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/src/plugins/cropperjs/dist/cropper.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/src/plugins/datatables/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() ?>/public/styles/style.css">
@@ -40,6 +41,7 @@
 
 	<!-- js -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="<?= base_url() ?>/public/scripts/core.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/script.min.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/process.js"></script>
@@ -58,6 +60,37 @@
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.flash.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/pdfmake.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/vfs_fonts.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/cropperjs/dist/cropper.js"></script>
+	<script>
+		window.addEventListener('DOMContentLoaded', function () {
+			var image = document.getElementById('image');
+			var cropBoxData;
+			var canvasData;
+			var cropper;
+
+			$('#modal').on('shown.bs.modal', function () {
+				cropper = new Cropper(image, {
+					autoCropArea: 0.5,
+					dragMode: 'move',
+					aspectRatio: 3 / 3,
+					restore: false,
+					guides: false,
+					center: false,
+					highlight: false,
+					cropBoxMovable: false,
+					cropBoxResizable: false,
+					toggleDragModeOnDblclick: false,
+					ready: function () {
+						cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+					}
+				});
+			}).on('hidden.bs.modal', function () {
+				cropBoxData = cropper.getCropBoxData();
+				canvasData = cropper.getCanvasData();
+				cropper.destroy();
+			});
+		});
+	</script>
 	<!-- Datatable Setting js -->
 	<!-- <script src="<?= base_url() ?>/public/scripts/datatable-setting.js"></script></body> -->
     <script src="<?= base_url() ?>/public/scripts/myapp.js"></script>

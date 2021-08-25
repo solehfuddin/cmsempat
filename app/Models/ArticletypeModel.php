@@ -6,9 +6,9 @@ use CodeIgniter\Model;
 class ArticletypeModel extends Model {
     protected $table = 'type_article';
     protected $primaryKey = 'kode_type';
-    protected $allowedFields = ['kode_type','type', 'insert_date', 'nama_user'];
-    protected $column_order = array('kode_type', 'type', 'insert_date', 'nama_user', '');
-    protected $column_search = array('kode_type', 'type', 'insert_date', 'nama_user');
+    protected $allowedFields = ['kode_type','type', 'kode_user'];
+    protected $column_order = array('kode_type', 'type', 'type_article.insert_date', 'nama_user', '');
+    protected $column_search = array('kode_type', 'type', 'type_article.insert_date');
     protected $order = array('kode_type' => 'asc');
     protected $request;
     protected $db;
