@@ -46,12 +46,12 @@
 	<script src="<?= base_url() ?>/public/scripts/script.min.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/process.js"></script>
 	<script src="<?= base_url() ?>/public/scripts/layout-settings.js"></script>
-	<script src="<?= base_url() ?>/public/src/plugins/apexcharts/apexcharts.min.js"></script>
+	<!-- <script src="<?= base_url() ?>/public/src/plugins/apexcharts/apexcharts.min.js"></script> -->
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-	<script src="<?= base_url() ?>/public/scripts/dashboard.js"></script>
+	<!-- <script src="<?= base_url() ?>/public/scripts/dashboard.js"></script> -->
 	<!-- buttons for Export datatable -->
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>

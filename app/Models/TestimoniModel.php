@@ -7,11 +7,10 @@ class TestimoniModel extends Model {
     protected $table = 'tbl_testimoni';
     protected $primaryKey = 'id_testimoni';
     protected $allowedFields = ['id_testimoni','name', 'perusahaan', 'jabatan', 'image', 'testimoni', 
-                                'kode_user', 'insert_date'];
+                                'kode_user'];
     protected $column_order = array('image', 'name', 'perusahaan', 'jabatan', 'nama_user',
                                     'tbl_testimoni.insert_date', '');
-    protected $column_search = array('image', 'name', 'perusahaan', 'jabatan', 'nama_user',
-                                     'tbl_testimoni.insert_date');
+    protected $column_search = array('image', 'name', 'perusahaan', 'jabatan', 'tbl_testimoni.insert_date');
     protected $order = array('id_testimoni' => 'desc');
     protected $request;
     protected $db;

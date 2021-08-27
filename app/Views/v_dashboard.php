@@ -237,4 +237,11 @@
 		</div>
 	</div>
 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/apexcharts/apexcharts.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+	<script src="<?= base_url() ?>/public/scripts/dashboard.js"></script>
 <?= $this->endSection(); ?>

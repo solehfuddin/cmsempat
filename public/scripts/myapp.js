@@ -301,6 +301,21 @@ function generatekodearticletype() {
   });
 }
 
+//Fungsi generate kode testimoni
+function generatekodetestimoni() {
+  var url = "/testimoni/getdata";
+  $.ajax({
+      url: BASE_URL + url,
+      dataType: "JSON",
+      success: function(response) {
+          $('#testimoni_kode').val(response.kodegen);
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+      }
+  });
+}
+
 //Fungsi modal add account
 $(document).ready(function() {
   $('.formModaltambahaccount').submit(function(e) {
@@ -457,6 +472,117 @@ $(document).ready(function() {
   });
 });
 
+//Fungsi modal add testimoni
+$(document).ready(function() {
+  $('.formModaltambahtestimoni').submit(function(e) {
+      e.preventDefault();
+
+      var data = new FormData(this);
+
+      $.ajax({
+          type: "post",
+          url: $(this).attr('action'),
+          enctype: 'multipart/form-data',
+          processData: false,
+          contentType: false,
+          cache: false,
+          data: data,
+          dataType: "json",
+          beforeSend: function() {
+              $('.btnmodaltambahtestimoni').prop('disabled', true);
+              $('.btnmodaltambahtestimoni').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+          },
+          complete: function() {
+              $('.btnmodaltambahtestimoni').prop('disabled', false);
+              $('.btnmodaltambahtestimoni').html('Simpan');
+          },
+          success: function(response) {
+              if (response.error){
+                  if (response.error.testimoni_kode){
+                      $('#testimoni_kode').addClass('is-invalid');
+                      $('.errorTestimoniKode').html(response.error.testimoni_kode);
+                  }
+                  else
+                  {
+                      $('#testimoni_kode').removeClass('is-invalid');
+                      $('.errorTestimoniKode').html('');
+                  }
+
+                  if (response.error.testimoni_nama){
+                      $('#testimoni_nama').addClass('is-invalid');
+                      $('.errorTestimoniNama').html(response.error.testimoni_nama);
+                  }
+                  else
+                  {
+                      $('#testimoni_nama').removeClass('is-invalid');
+                      $('.errorTestimoniNama').html('');
+                  }
+				  
+				  if (response.error.testimoni_company){
+                      $('#testimoni_company').addClass('is-invalid');
+                      $('.errorTestimoniCompany').html(response.error.testimoni_company);
+                  }
+                  else
+                  {
+                      $('#testimoni_company').removeClass('is-invalid');
+                      $('.errorTestimoniCompany').html('');
+                  }
+				  
+				  if (response.error.testimoni_position){
+                      $('#testimoni_position').addClass('is-invalid');
+                      $('.errorTestimoniPosition').html(response.error.testimoni_position);
+                  }
+                  else
+                  {
+                      $('#testimoni_position').removeClass('is-invalid');
+                      $('.errorTestimoniPosition').html('');
+                  }
+				  
+				  if (response.error.testimoni_content){
+                      $('#testimoni_content').addClass('is-invalid');
+                      $('.errorTestimoniContent').html(response.error.testimoni_content);
+                  }
+                  else
+                  {
+                      $('#testimoni_content').removeClass('is-invalid');
+                      $('.errorTestimoniContent').html('');
+                  }
+				  
+				  if (response.error.testimoni_image){
+                      $('#testimoni_image').addClass('is-invalid');
+                      $('.errorTestimoniImage').html(response.error.testimoni_image);
+                  }
+                  else
+                  {
+                      $('#testimoni_image').removeClass('is-invalid');
+                      $('.errorTestimoniImage').html('');
+                  }
+              }
+              else
+              {
+                  $('#modaltambahtestimoni').modal('hide');
+
+                  Swal.fire(
+                      'Pemberitahuan',
+                      response.success.data,
+                      'success',
+                  ).then(function() {
+                      $('#testimoni_kode').val('');
+					  $('#testimoni_nama').val('');
+					  $('#testimoni_company').val('');
+					  $('#testimoni_position').val('');
+					  $('#testimoni_content').val('');
+                      $('#datatable-testi').DataTable().ajax.reload();
+                  });
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+          }
+      });
+  });
+});
+
 //Fungsi select tipe artikel
 function editaccount($kode) {
     var url = "/account/pilihdata";
@@ -505,6 +631,47 @@ function editarticletype($kode) {
             $('.errorArticletypeJudulubah').html('');
 
             $('#modalubaharticletype').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+}
+
+//Fungsi select tipe artikel
+function edittestimoni($kode) {
+    var url = "/testimoni/pilihdata";
+    $.ajax({
+        url: BASE_URL + url,
+        type: "post",
+        data: {
+            kode: $kode,
+        },
+        dataType: "JSON",
+        success: function(response) {
+            $('#testimoni_kodeubah').val(response.success.kode);
+            $('#testimoni_namaubah').val(response.success.nama);
+			$('#testimoni_companyubah').val(response.success.perusahaan);
+			$('#testimoni_positionubah').val(response.success.jabatan);
+			$('#testimoni_contentubah').val(response.success.testimoni);
+			 $('#testimoni_recentimg').attr("src", response.success.image);
+
+            $('#testimoni_namaubah').removeClass('is-invalid');
+            $('.errorTestimoniNamaubah').html('');
+			
+			$('#testimoni_companyubah').removeClass('is-invalid');
+            $('.errorTestimoniCompanyubah').html('');
+			
+			$('#testimoni_positionubah').removeClass('is-invalid');
+            $('.errorTestimoniPositionubah').html('');
+			
+			$('#testimoni_contentubah').removeClass('is-invalid');
+            $('.errorTestimoniContentubah').html('');
+			
+			$('#testimoni_imageubah').removeClass('is-invalid');
+            $('.errorTestimoniImageubah').html('');
+
+            $('#modalubahtestimoni').modal('show');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
@@ -626,6 +793,185 @@ $(document).ready(function() {
     });
 });
 
+//Fungsi update info profile
+$(document).ready(function() {
+    $('.formUpdateProfil').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: "json",
+            beforeSend: function() {
+                $('.btnubahprofile').prop('disabled', true);
+                $('.btnubahprofile').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+            },
+            complete: function() {
+                $('.btnubahprofile').prop('disabled', false);
+                $('.btnubahprofile').html('Ubah');
+            },
+            success: function(response) {
+                if (response.error){
+                    if (response.error.profile_nama){
+                        $('#profile_nama').addClass('is-invalid');
+                        $('.errorProfileNama').html(response.error.profile_nama);
+                    }
+                    else
+                    {
+                        $('#profile_nama').removeClass('is-invalid');
+                        $('.errorProfileNama').html('');
+                    }
+					
+					if (response.error.profile_email){
+                        $('#profile_email').addClass('is-invalid');
+                        $('.errorProfileEmail').html(response.error.profile_email);
+                    }
+                    else
+                    {
+                        $('#profile_email').removeClass('is-invalid');
+                        $('.errorProfileEmail').html('');
+                    }
+					
+					if (response.error.profile_newpass){
+                        $('#profile_newpass').addClass('is-invalid');
+                        $('.errorProfileNewPass').html(response.error.profile_newpass);
+                    }
+                    else
+                    {
+                        $('#profile_newpass').removeClass('is-invalid');
+                        $('.errorProfileNewPass').html('');
+                    }
+					
+					if (response.error.profile_confirmpass){
+                        $('#profile_confirmpass').addClass('is-invalid');
+                        $('.errorProfileConfirmPass').html(response.error.profile_confirmpass);
+                    }
+                    else
+                    {
+                        $('#profile_confirmpass').removeClass('is-invalid');
+                        $('.errorProfileConfirmPass').html('');
+                    }
+                }
+                else
+                {
+                    Swal.fire(
+                        'Pemberitahuan',
+                        response.success.data,
+                        'success',
+                    ).then(function() {
+                        window.location = response.success.link;
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
+        return false;
+    });
+});
+
+//Fungsi update testimoni
+$(document).ready(function() {
+    $('.formModalubahtestimoni').submit(function(e) {
+        e.preventDefault();
+		
+		var data = new FormData(this);
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr('action'),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: data,
+			dataType: "json",
+            beforeSend: function() {
+                $('.btnmodalubahtestimoni').prop('disabled', true);
+                $('.btnmodalubahtestimoni').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+            },
+            complete: function() {
+                $('.btnmodalubahtestimoni').prop('disabled', false);
+                $('.btnmodalubahtestimoni').html('Ubah');
+            },
+            success: function(response) {
+                if (response.error){
+                    if (response.error.testimoni_namaubah){
+                        $('#testimoni_namaubah').addClass('is-invalid');
+                        $('.errorTestimoniNamaubah').html(response.error.testimoni_namaubah);
+                    }
+                    else
+                    {
+                        $('#testimoni_namaubah').removeClass('is-invalid');
+                        $('.errorTestimoniNamaubah').html('');
+                    }
+					
+					if (response.error.testimoni_companyubah){
+                        $('#testimoni_companyubah').addClass('is-invalid');
+                        $('.errorTestimoniCompanyubah').html(response.error.testimoni_companyubah);
+                    }
+                    else
+                    {
+                        $('#testimoni_companyubah').removeClass('is-invalid');
+                        $('.errorTestimoniCompanyubah').html('');
+                    }
+					
+					if (response.error.testimoni_positionubah){
+                        $('#testimoni_positionubah').addClass('is-invalid');
+                        $('.errorTestimoniPositionubah').html(response.error.testimoni_positionubah);
+                    }
+                    else
+                    {
+                        $('#testimoni_positionubah').removeClass('is-invalid');
+                        $('.errorTestimoniPositionubah').html('');
+                    }
+					
+					if (response.error.testimoni_contentubah){
+                        $('#testimoni_contentubah').addClass('is-invalid');
+                        $('.errorTestimoniContentubah').html(response.error.testimoni_contentubah);
+                    }
+                    else
+                    {
+                        $('#testimoni_contentubah').removeClass('is-invalid');
+                        $('.errorTestimoniContentubah').html('');
+                    }
+					
+					if (response.error.testimoni_imageubah){
+                        $('#testimoni_imageubah').addClass('is-invalid');
+                        $('.errorTestimoniImageubah').html(response.error.testimoni_imageubah);
+                    }
+                    else
+                    {
+                        $('#testimoni_imageubah').removeClass('is-invalid');
+                        $('.errorTestimoniImageubah').html('');
+                    }
+                }
+                else
+                {
+                    $('#modalubahtestimoni').modal('hide');
+
+                    Swal.fire(
+                        'Pemberitahuan',
+                        response.success.data,
+                        'success',
+                    ).then(function() {
+                        //$('#datatable-testi').DataTable().ajax.reload();
+						window.location = response.success.link;
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
+        return false;
+    });
+});
+
 //Fungsi delete tipe artikel
 function deletearticletype($kode) {
   Swal.fire({
@@ -703,6 +1049,52 @@ function deleteaccount($kode) {
                           'success',
                       ).then(function() {
                           $('#datatable-uaccount').DataTable().ajax.reload();
+                      });
+                  }
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+              }
+          });
+      }
+      else if (result.dismiss == 'batal')
+      {
+          swal.dismiss();
+      }
+  });
+}
+
+//Fungsi delete account
+function deletetestimoni($kode) {
+  Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: 'Data akan terhapus permanen dari sistem',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal'
+  }).then(function(result) {
+      if (result.value)
+      {
+          var url =  '/testimoni/hapusdata';
+
+          $.ajax({
+              type: "post",
+              url: BASE_URL + url,
+              data: {
+                  kode: $kode,
+              },
+              dataType: "json",
+              success: function(response) {
+                  if (response.success){
+                      Swal.fire(
+                          'Pemberitahuan',
+                          response.success.data,
+                          'success',
+                      ).then(function() {
+                          $('#datatable-testi').DataTable().ajax.reload();
                       });
                   }
               },

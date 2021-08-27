@@ -58,4 +58,13 @@ class BaseController extends Controller
 		$this->validation = \Config\Services::validation();
 		date_default_timezone_set('Asia/Jakarta');
 	}
+	
+	function compressImg($filename) {
+        $thumbnail = \Config\Services::image()
+        ->withFile('public/images/' . $filename)
+		//->withFile(WRITEPATH.'uploads/' . $filename)
+        ->fit(900, 400, 'center')
+		->save('public/images/thumbs/' . $filename, 75);
+        //->save(WRITEPATH.'uploads/thumbs/' . $filename, 75);
+    }
 }
