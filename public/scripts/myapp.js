@@ -1,3 +1,6 @@
+CKEDITOR.replace('article_descfull');
+CKEDITOR.replace('article_descfullubah');
+
 // Handle Form Login
 $(document).ready(function() {
     $('.formLogin').submit(function(e) {
@@ -301,6 +304,21 @@ function generatekodearticletype() {
   });
 }
 
+//Fungsi generate kode artikel
+function generatekodearticle() {
+  var url = "/article/getdata";
+  $.ajax({
+      url: BASE_URL + url,
+      dataType: "JSON",
+      success: function(response) {
+          $('#article_kode').val(response.kodegen);
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+      }
+  });
+}
+
 //Fungsi generate kode testimoni
 function generatekodetestimoni() {
   var url = "/testimoni/getdata";
@@ -472,6 +490,108 @@ $(document).ready(function() {
   });
 });
 
+//Fungsi modal add article
+$(document).ready(function() {
+  $('.formModaltambaharticle').submit(function(e) {
+      e.preventDefault();
+
+      let data = new FormData(this);
+	
+	  data.append('article_descfull', CKEDITOR.instances.article_descfull.getData());
+
+      $.ajax({
+          type: "post",
+          url: $(this).attr('action'),
+          enctype: 'multipart/form-data',
+          processData: false,
+          contentType: false,
+          cache: false,
+          data: data,
+          dataType: "json",
+          beforeSend: function() {
+              $('.btnmodaltambaharticle').prop('disabled', true);
+              $('.btnmodaltambaharticle').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+          },
+          complete: function() {
+              $('.btnmodaltambaharticle').prop('disabled', false);
+              $('.btnmodaltambaharticle').html('Simpan');
+          },
+          success: function(response) {
+              if (response.error){
+                  if (response.error.article_kode){
+                      $('#article_kode').addClass('is-invalid');
+                      $('.errorArticleKode').html(response.error.article_kode);
+                  }
+                  else
+                  {
+                      $('#article_kode').removeClass('is-invalid');
+                      $('.errorArticleKode').html('');
+                  }
+
+                  if (response.error.article_title){
+                      $('#article_title').addClass('is-invalid');
+                      $('.errorArticleTitle').html(response.error.article_title);
+                  }
+                  else
+                  {
+                      $('#article_title').removeClass('is-invalid');
+                      $('.errorArticleTitle').html('');
+                  }
+				  
+				  if (response.error.article_slug){
+                      $('#article_slug').addClass('is-invalid');
+                      $('.errorArticleSlug').html(response.error.article_slug);
+                  }
+                  else
+                  {
+                      $('#article_slug').removeClass('is-invalid');
+                      $('.errorArticleSlug').html('');
+                  }
+				  
+				  if (response.error.article_descfull){
+                      $('#article_descfull').addClass('is-invalid');
+                      $('.errorArticleDescfull').html(response.error.article_descfull);
+                  }
+                  else
+                  {
+                      $('#article_descfull').removeClass('is-invalid');
+                      $('.errorArticleDescfull').html('');
+                  }
+				  
+				  if (response.error.article_img){
+                      $('#article_img').addClass('is-invalid');
+                      $('.errorArticleImg').html(response.error.article_img);
+                  }
+                  else
+                  {
+                      $('#article_img').removeClass('is-invalid');
+                      $('.errorArticleImg').html('');
+                  }
+              }
+              else
+              {
+                  $('#modaltambaharticle').modal('hide');
+
+                  Swal.fire(
+                      'Pemberitahuan',
+                      response.success.data,
+                      'success',
+                  ).then(function() {
+                      $('#article_title').val('');
+					  $('#article_slug').val('');
+					  $('#article_desc').val('');
+					  $('#article_img').val('');
+                      $('#datatable-article').DataTable().ajax.reload();
+                  });
+              }
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+          }
+      });
+  });
+});
+
 //Fungsi modal add testimoni
 $(document).ready(function() {
   $('.formModaltambahtestimoni').submit(function(e) {
@@ -583,7 +703,7 @@ $(document).ready(function() {
   });
 });
 
-//Fungsi select tipe artikel
+//Fungsi select account
 function editaccount($kode) {
     var url = "/account/pilihdata";
     $.ajax({
@@ -613,7 +733,7 @@ function editaccount($kode) {
     });
 }
 
-//Fungsi select tipe artikel
+//Fungsi select tipe artikel type
 function editarticletype($kode) {
     var url = "/articletype/pilihdata";
     $.ajax({
@@ -638,7 +758,60 @@ function editarticletype($kode) {
     });
 }
 
-//Fungsi select tipe artikel
+//Fungsi select data artikel
+function editarticle($kode) {
+    var url = "/article/pilihdata";
+    $.ajax({
+        url: BASE_URL + url,
+        type: "post",
+        data: {
+            kode: $kode,
+        },
+        dataType: "JSON",
+        success: function(response) {
+            $('#article_kodeubah').val(response.success.kode);
+            $('#article_typeubah').val(response.success.type);
+			$('#article_titleubah').val(response.success.judul);
+			$('#article_slugubah').val(response.success.slug);
+			$('#article_descubah').val(response.success.deskripsishort);
+			$('#article_recentimg').attr("src", response.success.image);
+			CKEDITOR.instances.article_descfullubah.setData(response.success.deskripsifull);
+			
+			if (response.success.img === "" || response.success.img === null)
+			{
+				$('#control-article-imgubah').attr("style","display: none");
+				$('#control-article-recentimg').attr("style","display: none");
+			}
+			else
+			{
+				$('#control-article-imgubah').attr("style","");
+				$('#control-article-recentimg').attr("style","");
+			}
+
+            $('#article_kodeubah').removeClass('is-invalid');
+            $('.errorArticleKodeubah').html('');
+			
+			$('#article_titleubah').removeClass('is-invalid');
+            $('.errorArticleTitleubah').html('');
+			
+			$('#article_slugubah').removeClass('is-invalid');
+            $('.errorArticleSlugubah').html('');
+			
+			$('#article_descubah').removeClass('is-invalid');
+            $('.errorArticleDescubah').html('');
+			
+			$('#article_descfullubah').removeClass('is-invalid');
+            $('.errorArticleDescfullubah').html('');
+
+            $('#modalubaharticle').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+}
+
+//Fungsi select testimoni
 function edittestimoni($kode) {
     var url = "/testimoni/pilihdata";
     $.ajax({
@@ -654,7 +827,7 @@ function edittestimoni($kode) {
 			$('#testimoni_companyubah').val(response.success.perusahaan);
 			$('#testimoni_positionubah').val(response.success.jabatan);
 			$('#testimoni_contentubah').val(response.success.testimoni);
-			 $('#testimoni_recentimg').attr("src", response.success.image);
+			$('#testimoni_recentimg').attr("src", response.success.image);
 
             $('#testimoni_namaubah').removeClass('is-invalid');
             $('.errorTestimoniNamaubah').html('');
@@ -672,6 +845,120 @@ function edittestimoni($kode) {
             $('.errorTestimoniImageubah').html('');
 
             $('#modalubahtestimoni').modal('show');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        }
+    });
+}
+
+//Fungsi select custom
+function editcustom($kode) {
+    var url = "/custom/pilihdata";
+    $.ajax({
+        url: BASE_URL + url,
+        type: "post",
+        data: {
+            kode: $kode,
+        },
+        dataType: "JSON",
+        success: function(response) {
+			$('#titlemodalubahcustom').html(response.success.judul);
+			$('#custom_kodeubah').val(response.success.kode);
+            $('#custom_keyubah').val(response.success.key);
+            $('#custom_judulubah').val(response.success.title);
+			if (response.success.title === "" || response.success.title === null)
+			{
+				$('#custom_judulubah').attr('readonly', true);
+			}
+			else
+			{
+				$('#custom_judulubah').attr('readonly', false);
+			}
+			
+			$('#custom_linkubah').val(response.success.link);
+			if (response.success.link === "" || response.success.link === null)
+			{
+				$('#custom_linkubah').attr('readonly', true);
+			}
+			else
+			{
+				$('#custom_linkubah').attr('readonly', false);
+			}
+			
+			$('#custom_counterubah').val(response.success.counter);
+			
+			$('#custom_desc1ubah').val(response.success.desc1);
+			if (response.success.desc1 === "" || response.success.desc1 === null)
+			{
+				$('#custom_desc1ubah').attr('readonly', true);
+			}
+			else
+			{
+				$('#custom_desc1ubah').attr('readonly', false);
+			}
+			
+			$('#custom_desc2ubah').val(response.success.desc2);
+			if (response.success.desc2 === "" || response.success.desc2 === null)
+			{
+				$('#custom_desc2ubah').attr('readonly', true);
+			}
+			else
+			{
+				$('#custom_desc2ubah').attr('readonly', false);
+			}
+			
+			$('#custom_recentimg').attr("src", response.success.image);
+			if (response.success.img === "" || response.success.img === null)
+			{
+				//$('#custom_imgubah').attr('disabled', true); style="display: none"
+				$('#control-imgubah').attr("style","display: none");
+				$('#control-recentubah').attr("style","display: none");
+			}
+			else
+			{
+				//$('#custom_imgubah').attr('disabled', false);
+				$('#control-imgubah').attr("style","");
+				$('#control-recentubah').attr("style","");
+			}
+			
+			if (response.success.key !== "services-item")
+			{
+				$('#control-isactiveubah').attr("style","display: none");
+			}
+			else
+			{
+				$('#control-isactiveubah').attr("style","");
+			}
+			
+			if (response.success.status == 1)
+            {
+                $('#custom_isactiveubah').prop("checked", true);
+            }
+            else
+            {
+                $('#custom_isactiveubah').prop("checked", false);
+            }
+
+            $('#custom_judulubah').removeClass('is-invalid');
+            $('.errorCustomJudullubah').html('');
+			
+			$('#custom_linkubah').removeClass('is-invalid');
+            $('.errorCustomLinkubah').html('');
+			
+			$('#custom_counterubah').removeClass('is-invalid');
+            $('.errorCustomCounterubah').html('');
+			
+			$('#custom_desc1ubah').removeClass('is-invalid');
+            $('.errorCustomDesc1ubah').html('');
+			
+			$('#custom_desc2ubah').removeClass('is-invalid');
+            $('.errorCustomDesc2ubah').html('');
+			
+			$('#custom_imgubah').removeClass('is-invalid');
+            $('.errorCustomImgubah').html('');
+
+            $('#modalubahcustom').modal('show');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
@@ -719,6 +1006,105 @@ $(document).ready(function() {
                         'success',
                     ).then(function() {
                         $('#datatable-articletype').DataTable().ajax.reload();
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
+        return false;
+    });
+});
+
+//Fungsi update artikel
+$(document).ready(function() {
+    $('.formModalubaharticle').submit(function(e) {
+        e.preventDefault();
+		
+		let data = new FormData(this);
+		data.append('article_descfullubah', CKEDITOR.instances.article_descfullubah.getData());
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr('action'),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: data,
+			dataType: "json",
+            beforeSend: function() {
+                $('.btnmodalubaharticle').prop('disabled', true);
+                $('.btnmodalubaharticle').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+            },
+            complete: function() {
+                $('.btnmodalubaharticle').prop('disabled', false);
+                $('.btnmodalubaharticle').html('Ubah');
+            },
+            success: function(response) {
+                if (response.error){
+                    if (response.error.article_kodeubah){
+                        $('#article_kodeubah').addClass('is-invalid');
+                        $('.errorArticleKodeubah').html(response.error.article_kodeubah);
+                    }
+                    else
+                    {
+                        $('#article_kodeubah').removeClass('is-invalid');
+                        $('.errorArticleKodeubah').html('');
+                    }
+					
+					if (response.error.article_titleubah){
+                        $('#article_titleubah').addClass('is-invalid');
+                        $('.errorArticleTitleubah').html(response.error.article_titleubah);
+                    }
+                    else
+                    {
+                        $('#article_titleubah').removeClass('is-invalid');
+                        $('.errorArticleTitleubah').html('');
+                    }
+					
+					if (response.error.article_slugubah){
+                        $('#article_slugubah').addClass('is-invalid');
+                        $('.errorArticleSlugubah').html(response.error.article_slugubah);
+                    }
+                    else
+                    {
+                        $('#article_slugubah').removeClass('is-invalid');
+                        $('.errorArticleSlugubah').html('');
+                    }
+					
+					if (response.error.article_descubah){
+                        $('#article_descubah').addClass('is-invalid');
+                        $('.errorArticleDescubah').html(response.error.article_descubah);
+                    }
+                    else
+                    {
+                        $('#article_descubah').removeClass('is-invalid');
+                        $('.errorArticleDescubah').html('');
+                    }
+					
+					if (response.error.article_descfullubah){
+                        $('#article_descfullubah').addClass('is-invalid');
+                        $('.errorArticleDescfullubah').html(response.error.article_descfullubah);
+                    }
+                    else
+                    {
+                        $('#article_descfullubah').removeClass('is-invalid');
+                        $('.errorArticleDescfullubah').html('');
+                    }
+                }
+                else
+                {
+                    $('#modalubaharticle').modal('hide');
+
+                    Swal.fire(
+                        'Pemberitahuan',
+                        response.success.data,
+                        'success',
+                    ).then(function() {
+						$('#datatable-article').DataTable().ajax.reload();
                     });
                 }
             },
@@ -972,6 +1358,128 @@ $(document).ready(function() {
     });
 });
 
+//Fungsi update custom
+$(document).ready(function() {
+    $('.formModalubahcustom').submit(function(e) {
+        e.preventDefault();
+		
+		let data = new FormData(this);
+
+        $('.custom_isactiveubah').each(function() {
+            if ($(this).is(":checked"))
+            {
+                // alert(1);
+                data.append('custom_isactiveubah', 1);
+            }
+            else
+            {
+                // alert(0);
+                data.append('custom_isactiveubah', 0);
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            url: $(this).attr('action'),
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: data,
+			dataType: "json",
+            beforeSend: function() {
+                $('.btnmodalubahcustom').prop('disabled', true);
+                $('.btnmodalubahcustom').html('<i class="fa fa-spin fa-spinner"></i> Processing');
+            },
+            complete: function() {
+                $('.btnmodalubahcustom').prop('disabled', false);
+                $('.btnmodalubahcustom').html('Ubah');
+            },
+            success: function(response) {
+                if (response.error){
+                    if (response.error.custom_judulubah){
+                        $('#custom_judulubah').addClass('is-invalid');
+                        $('.errorCustomJudullubah').html(response.error.custom_judulubah);
+                    }
+                    else
+                    {
+                        $('#custom_judulubah').removeClass('is-invalid');
+                        $('.errorCustomJudullubah').html('');
+                    }
+					
+					if (response.error.custom_linkubah){
+                        $('#custom_linkubah').addClass('is-invalid');
+                        $('.errorCustomLinkubah').html(response.error.custom_linkubah);
+                    }
+                    else
+                    {
+                        $('#custom_linkubah').removeClass('is-invalid');
+                        $('.errorCustomLinkubah').html('');
+                    }
+					
+					if (response.error.custom_counterubah){
+                        $('#custom_counterubah').addClass('is-invalid');
+                        $('.errorCustomCounterubah').html(response.error.custom_counterubah);
+                    }
+                    else
+                    {
+                        $('#custom_counterubah').removeClass('is-invalid');
+                        $('.errorCustomCounterubah').html('');
+                    }
+					
+					if (response.error.custom_desc1ubah){
+                        $('#custom_desc1ubah').addClass('is-invalid');
+                        $('.errorCustomDesc1ubah').html(response.error.custom_desc1ubah);
+                    }
+                    else
+                    {
+                        $('#custom_desc1ubah').removeClass('is-invalid');
+                        $('.errorCustomDesc1ubah').html('');
+                    }
+					
+					if (response.error.custom_desc2ubah){
+                        $('#custom_desc2ubah').addClass('is-invalid');
+                        $('.errorCustomDesc2ubah').html(response.error.custom_desc2ubah);
+                    }
+                    else
+                    {
+                        $('#custom_desc2ubah').removeClass('is-invalid');
+                        $('.errorCustomDesc2ubah').html('');
+                    }
+					
+					if (response.error.custom_imgubah){
+                        $('#custom_imgubah').addClass('is-invalid');
+                        $('.errorCustomImgubah').html(response.error.custom_imgubah);
+                    }
+                    else
+                    {
+                        $('#custom_imgubah').removeClass('is-invalid');
+                        $('.errorCustomImgubah').html('');
+                    }
+                }
+                else
+                {
+                    $('#modalubahcustom').modal('hide');
+
+                    Swal.fire(
+                        'Pemberitahuan',
+                        response.success.data,
+                        'success',
+                    ).then(function() {
+                        //$('#datatable-testi').DataTable().ajax.reload();
+						window.location = response.success.link;
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            }
+        });
+
+        return false;
+    });
+});
+
 //Fungsi delete tipe artikel
 function deletearticletype($kode) {
   Swal.fire({
@@ -1003,6 +1511,52 @@ function deletearticletype($kode) {
                           'success',
                       ).then(function() {
                           $('#datatable-articletype').DataTable().ajax.reload();
+                      });
+                  }
+              },
+              error: function(xhr, ajaxOptions, thrownError) {
+                  alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+              }
+          });
+      }
+      else if (result.dismiss == 'batal')
+      {
+          swal.dismiss();
+      }
+  });
+}
+
+//Fungsi delete artikel
+function deletearticle($kode) {
+  Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: 'Data akan terhapus permanen dari sistem',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal'
+  }).then(function(result) {
+      if (result.value)
+      {
+          var url =  '/article/hapusdata';
+
+          $.ajax({
+              type: "post",
+              url: BASE_URL + url,
+              data: {
+                  kode: $kode,
+              },
+              dataType: "json",
+              success: function(response) {
+                  if (response.success){
+                      Swal.fire(
+                          'Pemberitahuan',
+                          response.success.data,
+                          'success',
+                      ).then(function() {
+                          $('#datatable-article').DataTable().ajax.reload();
                       });
                   }
               },

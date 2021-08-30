@@ -7,9 +7,9 @@ class ArticleModel extends Model {
     protected $table = 'tbl_article';
     protected $primaryKey = 'id_projek';
     protected $allowedFields = ['id_projek','kode_type', 'title', 'slug', 'description', 'full_description', 
-                                'image', 'kode_user', 'insert_date'];
+                                'image', 'kode_user'];
     protected $column_order = array('type', 'title', 'slug', 'nama_user', 'tbl_article.insert_date', '');
-    protected $column_search = array('type', 'title', 'slug', 'nama_user', 'tbl_article.insert_date');
+    protected $column_search = array('title', 'slug', 'tbl_article.insert_date');
     protected $order = array('tbl_article.insert_date' => 'desc');
     protected $request;
     protected $db;

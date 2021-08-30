@@ -22,6 +22,11 @@ class ArticletypeModel extends Model {
                              ->select('*, tbl_user.nama_user, tbl_user.email')
                              ->join('tbl_user', 'type_article.kode_user = tbl_user.kode_user');
     }
+	
+	 public function getkodetype(){
+        $query = $this->dt->get();
+        return $query->getResultArray();
+    }
 
     private function _get_datatables_query(){
         $i = 0;

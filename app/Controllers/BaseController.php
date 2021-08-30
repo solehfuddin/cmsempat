@@ -67,4 +67,13 @@ class BaseController extends Controller
 		->save('public/images/thumbs/' . $filename, 75);
         //->save(WRITEPATH.'uploads/thumbs/' . $filename, 75);
     }
+	
+	function compressImgVer($filename) {
+        $thumbnail = \Config\Services::image()
+        ->withFile('public/images/' . $filename)
+		//->withFile(WRITEPATH.'uploads/' . $filename)
+        ->fit(493, 569, 'center')
+		->save('public/images/thumbs/' . $filename, 75);
+        //->save(WRITEPATH.'uploads/thumbs/' . $filename, 75);
+    }
 }

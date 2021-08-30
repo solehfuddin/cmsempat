@@ -61,6 +61,7 @@
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/pdfmake.min.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/datatables/js/vfs_fonts.js"></script>
 	<script src="<?= base_url() ?>/public/src/plugins/cropperjs/dist/cropper.js"></script>
+	<script src="<?= base_url() ?>/public/src/plugins/ckeditor/ckeditor.js"></script>
 	<script>
 		window.addEventListener('DOMContentLoaded', function () {
 			var image = document.getElementById('image');

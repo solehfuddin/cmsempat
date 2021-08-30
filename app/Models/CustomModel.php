@@ -7,9 +7,9 @@ class CustomModel extends Model {
     protected $table = 'tbl_custom';
     protected $primaryKey = 'id_custom';
     protected $allowedFields = ['title','description', 'description2', 'image', 'link', 'counter', 
-                                'key', 'kode_user', 'insert_date'];
+								'kode_user', 'is_active'];
     protected $column_order = array('key', 'title', 'nama_user', 'tbl_custom.insert_date', '');
-    protected $column_search = array('key', 'title', 'nama_user', 'tbl_custom.insert_date');
+    protected $column_search = array('key', 'title', 'tbl_custom.insert_date');
     protected $order = array('key' => 'asc');
     protected $request;
     protected $db;

@@ -35,4 +35,6 @@
 			</div>
 		</div>
 	</div>
+	
+	<?= $this->include('edit_custom'); ?>
 <?= $this->endSection(); ?>
